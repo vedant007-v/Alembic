@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "305938863528",
+    "project_id": "acmp-f9d02",
+    "storage_bucket": "acmp-f9d02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305938863528:android:63c3db5e8eaf6212d3b99d",
+        "android_client_info": {
+          "package_name": "com.example.apmc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA49HXimOd-09xDNYZqt3C2FvilojhRsZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
