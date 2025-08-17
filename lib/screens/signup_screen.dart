@@ -86,7 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green,
+                      color: Colors.teal,
                     ),
                   ),
                   SizedBox(height: 20),
@@ -94,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
+                      border: Border.all(color: Colors.teal),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
@@ -115,7 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
+                      border: Border.all(color: Colors.teal),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
@@ -138,7 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
+                      border: Border.all(color: Colors.teal),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
@@ -161,7 +161,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
+                      border: Border.all(color: Colors.teal),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
@@ -190,7 +190,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: ElevatedButton(
                             onPressed: _signUp,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
+                              backgroundColor: Colors.teal,
                               padding: EdgeInsets.symmetric(vertical: 15),
                               textStyle: TextStyle(fontSize: 16),
                               shape: RoundedRectangleBorder(

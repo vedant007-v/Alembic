@@ -14,8 +14,11 @@ class _addAdminState extends State<addAdmin> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _numberController = TextEditingController();
-  String _role = 'admin';  // Set default role to 'admin'
+  String _role = 'user';  // Set default role to 'admin'
   bool _isLoading = false;
+  String? selectedRole; // Stores selected value
+
+  final List<String> roles = ['User', 'admin'];
 
   Future<void> _signUp() async {
     if (!_formKey.currentState!.validate()) return;
@@ -37,7 +40,7 @@ class _addAdminState extends State<addAdmin> {
           'email': user.email,
           'name': _nameController.text.trim(),
           'number': _numberController.text.trim(),
-          'role': _role,
+          'role': selectedRole,
         });
 
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
@@ -78,19 +81,41 @@ class _addAdminState extends State<addAdmin> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Add Admin',
+                    'Add Users and Admins',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green,
+                      color: Colors.teal,
                     ),
                   ),
                   SizedBox(height: 20),
+                   Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    margin: EdgeInsets.only(bottom: 16.0),
+              child:     DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: 'Select Role',
+                border: OutlineInputBorder(),
+              ),
+              value: selectedRole,
+              items: roles.map((String role) {
+                return DropdownMenuItem<String>(
+                  value: role,
+                  child: Text(role),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  selectedRole = newValue;
+                });
+              },
+            ), 
+            ),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
+                      border: Border.all(color: Colors.teal),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
@@ -111,7 +136,7 @@ class _addAdminState extends State<addAdmin> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
+                      border: Border.all(color: Colors.teal),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
@@ -134,7 +159,7 @@ class _addAdminState extends State<addAdmin> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
+                      border: Border.all(color: Colors.teal),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
@@ -157,7 +182,7 @@ class _addAdminState extends State<addAdmin> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
+                      border: Border.all(color: Colors.teal),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
@@ -186,7 +211,7 @@ class _addAdminState extends State<addAdmin> {
                           child: ElevatedButton(
                             onPressed: _signUp,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
+                              backgroundColor: Colors.teal,
                               padding: EdgeInsets.symmetric(vertical: 15),
                               textStyle: TextStyle(fontSize: 16),
                               shape: RoundedRectangleBorder(

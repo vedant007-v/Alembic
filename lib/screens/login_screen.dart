@@ -45,14 +45,14 @@ class _LoginScreenState extends State<LoginScreen> {
           // Navigate to the admin dashboard screen
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => AdminDashboard()),
+            MaterialPageRoute(builder: (context) => UserHomeScreen()),
             (Route<dynamic> route) => false,
           );
         } else {
           // Navigate to user dashboard or any other screen
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => UserHomeScreen()),
+            MaterialPageRoute(builder: (context) => AdminDashboard()),
             (Route<dynamic> route) => false,
           );
         }
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green,
+                      color: Colors.teal,
                     ),
                   ),
                   SizedBox(height: 20),
@@ -107,7 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
+                      border: Border.all(color: Colors.teal
+                      ),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
@@ -131,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
+                      border: Border.all(color: Colors.teal),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
@@ -159,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: _login,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
+                              backgroundColor: Colors.teal,
                               padding: EdgeInsets.symmetric(vertical: 15),
                               textStyle: TextStyle(fontSize: 16),
                               shape: RoundedRectangleBorder(
@@ -181,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Text(
                       'Don\'t have an account? Sign Up',
-                      style: TextStyle(color: Colors.green),
+                      style: TextStyle(color: Colors.teal),
                     ),
                   ),
                 ],

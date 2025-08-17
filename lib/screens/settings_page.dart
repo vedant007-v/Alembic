@@ -1,77 +1,126 @@
-import 'package:apmc/screens/add_admin.dart';
-import 'package:apmc/screens/admin_info.dart';
-import 'package:apmc/screens/login_screen.dart';
-import 'package:apmc/screens/users_info.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:apmc/screens/add_Product_info.dart';
 import 'package:apmc/screens/add_order_info.dart';
 import 'package:apmc/screens/add_sales_info.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:apmc/screens/add_shop_info.dart';
-import 'package:apmc/screens/sales_info.dart';
-import 'package:apmc/screens/dashboard_page.dart';
+import 'package:apmc/screens/animal_husbandry.dart';
+import 'package:apmc/screens/login_screen.dart';
+import 'package:apmc/screens/user_home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:apmc/screens/add_Product_info.dart';
 
 class AdminDashboard extends StatelessWidget {
+  AdminDashboard({super.key});
+
+final List<Map<String, dynamic>> cards = [
+  {
+    'title': 'Add new Farmer',
+    'icon': FontAwesomeIcons.personDigging,
+    'isFontAwesome': true,
+    'screen': AddShopInfoScreen(),
+  },
+  {
+    'title': 'Add Farmer crops Details',
+    'icon': FontAwesomeIcons.seedling,
+    'isFontAwesome': true,
+    'goThroughRationCard': true,
+    'screenBuilder': (String rationCardNo) =>
+    AddFarmExpenseScreen(rationCardNo: rationCardNo),
+
+  },
+  {
+    'title': 'Add Intervention',
+    'icon': FontAwesomeIcons.toolbox,
+    'isFontAwesome': true,
+    'goThroughRationCard': true,
+    'screenBuilder': (String rationCardNo) =>
+        AddInterventionScreen(rationCardNo: rationCardNo),
+  },
+  {
+    'title': 'Animal Husbandry',
+    'icon': FontAwesomeIcons.cow,
+    'isFontAwesome': true,
+    'goThroughRationCard': true,
+    'screenBuilder': (String rationCardNo) =>
+        AnimalHusbandryScreen(rationCardNo: rationCardNo),
+  },
+];
+
+
+
   @override
   Widget build(BuildContext context) {
-    // Use MediaQuery to get screen dimensions
-    final screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Admin Dashboard'),
-        backgroundColor: Colors.green,
-      ),
-      drawer: NavigationDrawer(),
+  title: const Text(
+    'User Dashboard',
+    style: TextStyle(color: Colors.white), // 👈 Title text white
+  ),
+  backgroundColor: Colors.teal,
+  iconTheme: const IconThemeData(color: Colors.white), // 👈 Drawer icon white
+),
+      drawer: const NavigationDrawer(),
       body: Padding(
-        padding: EdgeInsets.all(screenWidth * 0.02), // Responsive padding
-        child: GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: screenWidth > 600 ? 4 / 3 : 3 / 2, // Adjust aspect ratio based on screen width
-          crossAxisSpacing: screenWidth * 0.02, // Responsive spacing
-          mainAxisSpacing: screenWidth * 0.02, // Responsive spacing
-          children: <Widget>[
-            LoginBlock(
-              title: 'Add Shop Info',
-              icon: Icons.shop_2_rounded,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddShopInfoScreen()),
-                );
-              },
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            // Slogan
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Text(
+                  'Every step matters – Walk towards a better future.',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.teal[800],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
-            LoginBlock(
-              title: 'Add Product Info',
-              icon: Icons.production_quantity_limits_rounded,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AddProductInfoScreen()),
-                );
-              },
-            ),
-            LoginBlock(
-              title: 'Add Order Info',
-              icon: Icons.shopping_cart,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddOrderInfoScreen()),
-                );
-              },
-            ),
-            LoginBlock(
-              title: 'Add Sales Info',
-              icon: Icons.trending_up,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddSalesInfoScreen()),
-                );
-              },
+
+            // Grid view of features
+            Expanded(
+              child: GridView.builder(
+                itemCount: cards.length,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 1.2,
+                ),
+                itemBuilder: (context, index) {
+                  final item = cards[index];
+                  return LoginBlock(
+                    title: item['title'],
+                    icon: item['icon'],
+                    isFontAwesome: item['isFontAwesome'] ?? false,
+                    onTap: () {
+                      if (item['goThroughRationCard'] == true) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => RationCardScreen(
+        nextScreen: (rationCardNumber) => item['screenBuilder'](rationCardNumber),
+      ),
+    ),
+  );
+} else {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => item['screen'],
+    ),
+  );
+}
+
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -83,36 +132,44 @@ class AdminDashboard extends StatelessWidget {
 class LoginBlock extends StatelessWidget {
   final String title;
   final IconData icon;
+  final bool isFontAwesome;
   final VoidCallback onTap;
 
-  LoginBlock({required this.title, required this.icon, required this.onTap});
+  const LoginBlock({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.isFontAwesome,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // Use MediaQuery to get screen dimensions for better sizing
-        final screenWidth = MediaQuery.of(context).size.width;
+    final Widget iconWidget = isFontAwesome
+        ? FaIcon(icon, color: Colors.teal, size: 30)
+        : Icon(icon, color: Colors.teal, size: 30);
 
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        elevation: 5.0,
-        margin: EdgeInsets.all(screenWidth * 0.02), // Responsive margin
-        color: Colors.white,
-        child: Container(
-          padding: EdgeInsets.all(screenWidth * 0.04), // Responsive padding
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(icon, size: screenWidth * 0.08, color: Colors.green), // Responsive icon size
-              SizedBox(height: screenWidth * 0.02), // Responsive space between icon and text
-              Text(title,
-                  style: TextStyle(
-                      fontSize: screenWidth * 0.04,
-                      color: Colors.green)), // Responsive text size
+            children: [
+              iconWidget,
+              const SizedBox(height: 10),
+              Text(
+                title,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  color: Colors.teal[800],
+                ),
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
@@ -122,12 +179,14 @@ class LoginBlock extends StatelessWidget {
 }
 
 class NavigationDrawer extends StatelessWidget {
+  const NavigationDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     User? currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser == null) {
-      return Drawer(
+      return const Drawer(
         child: Center(child: Text('No user is currently signed in.')),
       );
     }
@@ -139,13 +198,13 @@ class NavigationDrawer extends StatelessWidget {
           .get(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Drawer(
+          return const Drawer(
             child: Center(child: CircularProgressIndicator()),
           );
         }
 
         if (snapshot.hasError) {
-          return Drawer(
+          return const Drawer(
             child: Center(child: Text('Error fetching user data')),
           );
         }
@@ -153,12 +212,11 @@ class NavigationDrawer extends StatelessWidget {
         final userData = snapshot.data?.data() as Map<String, dynamic>?;
 
         if (userData == null) {
-          return Drawer(
+          return const Drawer(
             child: Center(child: Text('User data not found')),
           );
         }
 
-        final String userRole = userData['role'] ?? 'user';
         final String userName = userData['name'] ?? 'Unknown';
         final String userEmail = userData['email'] ?? 'Unknown';
 
@@ -167,8 +225,8 @@ class NavigationDrawer extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: <Widget>[
               UserAccountsDrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.green,
+                decoration: const BoxDecoration(
+                  color: Colors.teal,
                 ),
                 accountName: Text(userName),
                 accountEmail: Text(userEmail),
@@ -176,9 +234,10 @@ class NavigationDrawer extends StatelessWidget {
                   backgroundColor: Colors.white,
                   child: Text(
                     userName.isNotEmpty ? userName[0] : '',
-                    style: TextStyle(
-                        fontSize: 24.0,
-                        color: Colors.green),
+                    style: const TextStyle(
+                      fontSize: 24.0,
+                      color: Colors.teal,
+                    ),
                   ),
                 ),
               ),
@@ -186,44 +245,25 @@ class NavigationDrawer extends StatelessWidget {
                 icon: Icons.home,
                 text: 'Home',
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AdminDashboard()),
+                    MaterialPageRoute(
+                        builder: (context) => UserHomeScreen()),
                   );
                 },
               ),
               _createDrawerItem(
-                icon: Icons.person,
-                text: 'Add Admin',
-                onTap: () {
+                icon: Icons.logout_rounded,
+                text: 'Log out',
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => addAdmin()),
+                    MaterialPageRoute(
+                        builder: (context) =>  LoginScreen()),
                   );
                 },
               ),
-              _createDrawerItem(
-                icon: Icons.person,
-                text: 'User Info',
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => UsersInfo()),
-                  );
-                },
-              ),
-              if (userRole == 'admin')
-                _createDrawerItem(
-                  icon: Icons.logout_rounded,
-                  text: 'Log out',
-                  onTap: () async {
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
-                  },
-                ),
             ],
           ),
         );
@@ -231,18 +271,19 @@ class NavigationDrawer extends StatelessWidget {
     );
   }
 
-  Widget _createDrawerItem(
-      {required IconData icon,
-      required String text,
-      required GestureTapCallback onTap}) {
+  Widget _createDrawerItem({
+    required IconData icon,
+    required String text,
+    required GestureTapCallback onTap,
+  }) {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Icon(icon, color: Colors.green),
-          Padding(
-            padding: EdgeInsets.only(left: 8.0),
-            child: Text(text,
-                style: TextStyle(color: Colors.green)),
+          Icon(icon, color: Colors.teal),
+          const SizedBox(width: 8),
+          Text(
+            text,
+            style: const TextStyle(color: Colors.teal),
           )
         ],
       ),
@@ -250,4 +291,3 @@ class NavigationDrawer extends StatelessWidget {
     );
   }
 }
-

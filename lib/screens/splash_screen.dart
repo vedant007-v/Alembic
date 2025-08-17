@@ -10,13 +10,35 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.teal,
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Image.asset(
-            'assets/apmclogo.png',
-            fit: BoxFit.cover,
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                // You can replace this with your logo or any other widget
+                Text(
+                  'Krishi',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'RobotoMono',
+                  ),
+                ),
+                SizedBox(height: 20),
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              ],
+            ),
           ),
+          // Image.asset(
+          //   'assets/apmclogo.png',
+          //   fit: BoxFit.cover,
+          // ),
           // Show a progress indicator while loading
           FutureBuilder<User?>(
             future: _checkAuthenticationStatus(),
@@ -25,9 +47,9 @@ class SplashScreen extends StatelessWidget {
                 return Container(
                   color: Colors.black.withOpacity(0.4),
                   child: Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
+                    // child: CircularProgressIndicator(
+                    //   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    // ),
                   ),
                 );
               } else {
@@ -41,11 +63,11 @@ class SplashScreen extends StatelessWidget {
                       if (userSnapshot.connectionState == ConnectionState.waiting) {
                         return Container(
                           color: Colors.black.withOpacity(0.4),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                            ),
-                          ),
+                          // child: Center(
+                          //   child: CircularProgressIndicator(
+                          //     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          //   ),
+                          // ),
                         );
                       } else {
                         if (userSnapshot.hasData) {
@@ -57,11 +79,11 @@ class SplashScreen extends StatelessWidget {
                             String role = userData['role'];
                             if (role == 'admin') {
                               // Navigate to the admin dashboard screen
-                              return AdminDashboard(); // Return admin dashboard
+                              return UserHomeScreen(); // Return admin dashboard
                             } else {
                               // Navigate to user dashboard or any other screen
                               // Replace UserHomeScreen with your desired screen for regular users
-                              return UserHomeScreen(); // Return user home screen
+                              return AdminDashboard(); // Return user home screen
                             }
                           }
                         }

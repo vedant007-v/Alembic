@@ -11,7 +11,7 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Dashboard'),
-        backgroundColor: Colors.green, // Change app bar color
+        backgroundColor: Colors.teal, // Change app bar color
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -20,7 +20,7 @@ class DashboardScreen extends StatelessWidget {
           children: [
             Text(
               'Add New Information',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green), // Change text color
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.teal), // Change text color
             ),
             SizedBox(height: 16),
             TextField(
@@ -60,7 +60,7 @@ class DashboardScreen extends StatelessWidget {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green, // Change button color
+                backgroundColor: Colors.teal, // Change button color
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)), // Change button shape
               ),
               child: Text('Add Information', style: TextStyle(color: Colors.white)), // Change text color
@@ -80,7 +80,7 @@ class DashboardScreen extends StatelessWidget {
                   final data = snapshot.data?.docs;
 
                   if (data == null || data.isEmpty) {
-                    return Center(child: Text('No information available.', style: TextStyle(color: Colors.green))); // Change text color
+                    return Center(child: Text('No information available.', style: TextStyle(color: Colors.teal))); // Change text color
                   }
 
                   return ListView.builder(
