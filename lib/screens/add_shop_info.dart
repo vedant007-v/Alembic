@@ -25,7 +25,7 @@ class _AddShopInfoScreenState extends State<AddShopInfoScreen> {
   final firestore = FirebaseFirestore.instance.collection('farmer_details');
 
   final List<String> districts = ['Vadodara', 'Panchmahal'];
-  final List<String> blocks = ['Padra', 'Wagh', 'Halol'];
+  final List<String> blocks = ['Padra', 'Waghodiya', 'Halol'];
   final List<String> villages = [
     'Jarod', 'Kamrol', 'Haripura', 'Lilora', 'Asoj', 'Abhrampura', 'Paldi',
     'Panchdevla', 'Panelav', 'Ambatalav', 'Tajpura', 'Shivjipura', 'Vaseti',

@@ -1,3 +1,4 @@
+import 'package:apmc/screens/AnimalHusbandryDataScreen.dart';
 import 'package:apmc/screens/add_admin.dart';
 import 'package:apmc/screens/admin_info.dart';
 import 'package:apmc/screens/login_screen.dart';
@@ -24,6 +25,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     {'title': 'No of farmers', 'icon':FontAwesomeIcons.personDigging, 'screen': FarmerDetailsOnlyScreen()},
     {'title': 'farmers increase income', 'icon': Icons.trending_up, 'screen': PositiveNetIncomeScreen()},
     {'title': 'farmers decrease input cost', 'icon': Icons.trending_down, 'screen': NegativeNetIncomeScreen()},
+        {'title': 'farmers Cow increase Milk', 'icon': FontAwesomeIcons.cow, 'screen': AnimalHusbandryDataScreen()},
+
   ];
 
   @override

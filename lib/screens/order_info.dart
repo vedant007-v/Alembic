@@ -6,7 +6,7 @@ import 'package:excel/excel.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:path/path.dart' as p;
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AnimalHusbandryScreen extends StatefulWidget {
-  const AnimalHusbandryScreen({super.key, required String rationCardNo});
+  final String rationCardNo;
+  const AnimalHusbandryScreen({super.key, required this.rationCardNo});
 
   @override
   _AnimalHusbandryScreenState createState() => _AnimalHusbandryScreenState();
@@ -23,6 +24,9 @@ class _AnimalHusbandryScreenState extends State<AnimalHusbandryScreen> {
   final Map<String, List<String>> multiselectValues = {
     'વિયહાન થયું છે': [],
   };
+
+  // Quantity controllers for each selected animal in multiselect
+  final Map<String, TextEditingController> animalQuantityControllers = {};
 
   // You can add more lists for different labels if needed.
   List<String> getItemsForLabel(String label) {
@@ -58,6 +62,16 @@ class _AnimalHusbandryScreenState extends State<AnimalHusbandryScreen> {
                 );
                 if (selected != null) {
                   setState(() {
+                    // Initialize controllers for newly selected animals
+                    for (final animal in selected) {
+                      animalQuantityControllers.putIfAbsent(
+                        animal,
+                        () => TextEditingController(),
+                      );
+                    }
+                    // Remove controllers for unselected animals
+                    animalQuantityControllers.removeWhere((k, v) => !selected.contains(k));
+
                     multiselectValues[label] = selected;
                   });
                 }
@@ -76,19 +90,46 @@ class _AnimalHusbandryScreenState extends State<AnimalHusbandryScreen> {
             ),
             if (selectedItems.isNotEmpty) ...[
               const SizedBox(height: 8),
-              Wrap(
-                spacing: 6,
-                runSpacing: 6,
-                children: selectedItems.map((item) => Chip(
-                  label: Text(item),
-                  deleteIcon: const Icon(Icons.close, size: 18),
-                  onDeleted: () {
-                    setState(() {
-                      multiselectValues[label]!.remove(item);
-                    });
-                  },
-                )).toList(),
-              ),
+              // For each selected animal, show a chip and a quantity field
+              ...selectedItems.map((item) => Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Chip(
+                        label: Text(item),
+                        deleteIcon: const Icon(Icons.close, size: 18),
+                        onDeleted: () {
+                          setState(() {
+                            multiselectValues[label]!.remove(item);
+                            animalQuantityControllers.remove(item)?.dispose();
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    SizedBox(
+                      width: 110,
+                      child: TextFormField(
+                        controller: animalQuantityControllers[item],
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          labelText: 'સંખ્યા',
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                        ),
+                        validator: (value) {
+                          if ((multiselectValues[label] ?? []).contains(item)) {
+                            if (value == null || value.trim().isEmpty) return 'આવશ્યક';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              )),
             ],
           ],
         ),
@@ -107,15 +148,17 @@ class _AnimalHusbandryScreenState extends State<AnimalHusbandryScreen> {
     'બકરી': TextEditingController(),
     'ઘેટાં': TextEditingController(),
     'અન્ય': TextEditingController(),
+    'અન્યનું નામ': TextEditingController(),
     '(2022)પહેલાં દૂધ ઉત્પાદન (દરરોજ)': TextEditingController(),
     'પ્રોજેક્ટ પછી દૂધ ઉત્પાદન (દરરોજ)': TextEditingController(),
   };
 
   final Map<String, String?> dropdownValues = {
     'AI લાભ મળ્યો છે?': null,
-    'વ્યાસન થયું છે?': null,
+    'વિયહાન થયું છે?': null,
     'મિનરલ મિશ્રણ વાપર્યું છે?': null,
     'ડિવોર્મિંગ ટેબલેટ વાપર્યું છે?': null,
+    'અન્ય છે?': null,
   };
   
 
@@ -123,7 +166,7 @@ class _AnimalHusbandryScreenState extends State<AnimalHusbandryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('પશુપાલન માહિતી ઉમેરો' ,style: TextStyle(color: Colors.white)),
+        title: const Text('પશુપાલન માહિતી ઉમેરો' ,style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.teal,
          iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -135,12 +178,20 @@ class _AnimalHusbandryScreenState extends State<AnimalHusbandryScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Text Fields
-              ...controllers.keys.map(buildTextField).toList(),
+              ...controllers.keys
+                  .where((key) => key != 'અન્ય' && key != 'અન્યનું નામ')
+                  .map(buildTextField)
+                  .toList(),
 
               const SizedBox(height: 10),
 
               // Dropdowns
               ...dropdownValues.keys.map(buildDropdownYesNo).toList(),
+
+              if (dropdownValues['અન્ય છે?'] == 'હા') ...[
+                buildTextField('અન્ય'),
+                buildTextField('અન્યનું નામ'),
+              ],
 
               const SizedBox(height: 20),
                buildMultiselectField('વિયહાન થયું છે'),
@@ -151,6 +202,7 @@ class _AnimalHusbandryScreenState extends State<AnimalHusbandryScreen> {
                   onPressed: () async {
   if (_formKey.currentState!.validate()) {
     Map<String, dynamic> data = {
+      'rationCardNo' : widget.rationCardNo,
       'timestamp': FieldValue.serverTimestamp(),
     };
 
@@ -164,8 +216,13 @@ class _AnimalHusbandryScreenState extends State<AnimalHusbandryScreen> {
       data[key] = controller.text.trim();
     });
 
-    // ✅ Add multi-select values
-    data['વિયહાન થયું છે'] = multiselectValues['વિયહાન થયું છે'];
+    // Add multi-select values with quantities as a map
+    final List<String> selected = multiselectValues['વિયહાન થયું છે'] ?? [];
+    final Map<String, dynamic> viyahanData = {};
+    for (final animal in selected) {
+      viyahanData[animal] = animalQuantityControllers[animal]?.text.trim() ?? '';
+    }
+    data['વિયહાન થયું છે'] = viyahanData;
 
     await firestore.add(data);
 
@@ -175,6 +232,7 @@ class _AnimalHusbandryScreenState extends State<AnimalHusbandryScreen> {
 
     // Clear all form fields
     controllers.forEach((key, controller) => controller.clear());
+    animalQuantityControllers.forEach((key, controller) => controller.clear());
     setState(() {
       dropdownValues.updateAll((key, value) => null);
       multiselectValues.updateAll((key, value) => []);
@@ -203,7 +261,7 @@ class _AnimalHusbandryScreenState extends State<AnimalHusbandryScreen> {
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: TextField(
         controller: controllers[label],
-        keyboardType: TextInputType.number,
+        keyboardType: label.contains('નામ') ? TextInputType.text : TextInputType.number,
         decoration: InputDecoration(
           labelText: label,
           labelStyle: const TextStyle(fontSize: 14),
@@ -232,10 +290,28 @@ class _AnimalHusbandryScreenState extends State<AnimalHusbandryScreen> {
         onChanged: (newValue) {
           setState(() {
             dropdownValues[label] = newValue;
+            // If Other == 'ના', clear hidden fields to avoid saving stale values
+            if (label == 'અન્ય છે?' && newValue != 'હા') {
+              controllers['અન્ય']?.clear();
+              controllers['અન્યનું નામ']?.clear();
+            }
           });
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Dispose standard text controllers
+    for (final c in controllers.values) {
+      c.dispose();
+    }
+    // Dispose animal quantity controllers
+    for (final c in animalQuantityControllers.values) {
+      c.dispose();
+    }
+    super.dispose();
   }
 }
 class MultiSelectDialog extends StatefulWidget {
@@ -243,7 +319,7 @@ class MultiSelectDialog extends StatefulWidget {
   final List<String> items;
   final List<String> initialSelected;
 
-  const MultiSelectDialog({
+  const MultiSelectDialog({super.key, 
     required this.title,
     required this.items,
     required this.initialSelected,
