@@ -248,7 +248,7 @@ class NavigationDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => UserHomeScreen()),
+                        builder: (context) => AdminDashboard()),
                   );
                 },
               ),

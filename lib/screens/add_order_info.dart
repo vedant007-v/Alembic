@@ -15,7 +15,6 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
   final firestore = FirebaseFirestore.instance.collection('interventions');
 
   final TextEditingController seedAreaController = TextEditingController();
-  final TextEditingController otherHelpAreaController = TextEditingController();
   final TextEditingController otherInterventionNameController =
       TextEditingController();
   final TextEditingController otherHelpNameController = TextEditingController();
@@ -39,13 +38,12 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
   final Map<String, TextEditingController> otherHelpAreaControllers = {};
 
   final Map<String, String> fieldKeyMap = {
-    'મોસમ': 'season',
+    'ઋતુ': 'season',
     'બીજ આપ્યું': 'seed_given',
     'બીજ માટે વિઘા': 'seed_area',
-    'હસ્તક્ષેપ': 'interventions',
+    'બીજ': 'interventions',
     'અન્ય સહાય મળી છે': 'other_help_given',
     'અન્ય સહાય': 'other_help_items',
-    'અન્ય સહાય માટે વિઘા': 'other_help_area',
   };
 
   final List<String> seasonOptions = ['Summer', 'Monsoon', 'Winter'];
@@ -53,25 +51,25 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
     'Halder Seeds (kg)',
     'Paddy (kg)',
     'Castor (kg)',
-    'Toovar Dal (kg)',
+    'Toovar (kg)',
     'Sweet Corn (kg)',
-    'Trichoderma',
-    'Pseudomonas',
-    'Sagarika (ml/kg)',
-    'Nano Urea Plus (ml)',
     'Cow Pea (Seed Count)',
     'Onion Seeds (kg)',
-    'Organic Fertilizer',
     'Wheat',
     'Green Moong (kg)',
     'Sesame/Til (kg)',
-    'Mycorrhiza Packet Count',
     'Other',
   ];
   final List<String> otherHelp = [
     'Yellow Sticky Trap',
     'Pheromone Trap',
     'Hydrogel',
+    'Trichoderma',
+    'Pseudomonas',
+    'Sagarika (ml/kg)',
+    'Nano Urea Plus (ml)',
+    'Organic Fertilizer',
+    'Mycorrhiza Packet Count',
     'Other',
   ];
 
@@ -87,7 +85,7 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
     super.initState();
     dropdownValues['બીજ આપ્યું (કિ.ગ્રા/સંખ્યા)'] = null;
     dropdownValues['અન્ય સહાય મળી છે?'] = null;
-    multiselectValues['હસ્તક્ષેપ'] = [];
+    multiselectValues['બીજ'] = [];
     multiselectValues['અન્ય સહાય'] = [];
   }
 
@@ -95,7 +93,7 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('હસ્તક્ષેપ માહિતી ઉમેરો',
+        title: const Text('બીજ માહિતી ઉમેરો',
             style: TextStyle(color: Colors.white)),
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.teal,
@@ -108,7 +106,7 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
             children: [
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
-                  labelText: 'મોસમ પસંદ કરો',
+                  labelText: 'ઋતુ પસંદ કરો',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10)),
                 ),
@@ -128,16 +126,15 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
               const SizedBox(height: 10),
               buildDropdownYesNo('બીજ આપ્યું (કિ.ગ્રા/સંખ્યા)'),
               if (dropdownValues['બીજ આપ્યું (કિ.ગ્રા/સંખ્યા)'] == 'Yes') ...[
-                buildMultiselectField('હસ્તક્ષેપ', interventions),
-                if ((multiselectValues['હસ્તક્ષેપ'] ?? [])
-                    .contains('Other')) ...[
+                buildMultiselectField('બીજ', interventions),
+                if ((multiselectValues['બીજ'] ?? []).contains('Other')) ...[
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6.0),
                     child: TextField(
                       controller: otherInterventionCountController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        labelText: 'How many Other interventions?',
+                        labelText: 'બીજા કેટલા બીજ આપ્યા?',
                         labelStyle: const TextStyle(fontSize: 14),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)),
@@ -183,21 +180,20 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                       (i) {
                     return Column(
                       children: [
-                        buildTextField('Other Intervention Name #${i + 1}',
+                        buildTextField('બીજા બીજનું નામ? #${i + 1}',
                             otherInterventionNameControllers[i]),
-                        buildNumberField(
-                            'Other Intervention Quantity #${i + 1}',
+                        buildNumberField('બીજા બીજની સંખ્યા? #${i + 1}',
                             otherInterventionQtyControllersList[i]),
                         buildNumberField(
-                            'Other Intervention Area (વિઘા) #${i + 1}',
+                            'કેટલી જગ્યા માટે આપ્યા (વિઘા) #${i + 1}',
                             otherInterventionAreaControllers[i]),
                       ],
                     );
                   }),
                 ],
-                if ((multiselectValues['હસ્તક્ષેપ'] ?? []).isNotEmpty) ...[
+                if ((multiselectValues['બીજ'] ?? []).isNotEmpty) ...[
                   const SizedBox(height: 8),
-                  ...((multiselectValues['હસ્તક્ષેપ'] ?? [])
+                  ...((multiselectValues['બીજ'] ?? [])
                       .where((e) => e != 'Other')).map((item) {
                     interventionQtyControllers.putIfAbsent(
                         item, () => TextEditingController());
@@ -205,16 +201,16 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                         item, () => TextEditingController());
                     return Column(
                       children: [
-                        buildNumberField('$item quantity',
-                            interventionQtyControllers[item]!),
-                        buildNumberField('$item area (વિઘા)',
-                            interventionAreaControllers[item]!),
+                        buildNumberField(
+                            '$item સંખ્યા', interventionQtyControllers[item]!),
+                        buildNumberField(
+                            '$item વિઘા', interventionAreaControllers[item]!),
                       ],
                     );
                   }).toList(),
                 ],
-                buildNumberField(
-                    'જો હા, કેટલુ વિઘા માટે (કુલ)', seedAreaController),
+                // buildNumberField(
+                //     'જો હા, કેટલુ વિઘા માટે (કુલ)', seedAreaController),
               ],
               const SizedBox(height: 10),
               buildDropdownYesNo('અન્ય સહાય મળી છે?'),
@@ -228,7 +224,7 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                       controller: otherHelpCountController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        labelText: 'How many Other helps?',
+                        labelText: 'કેટલી અન્ય સહાય મળી છે?',
                         labelStyle: const TextStyle(fontSize: 14),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)),
@@ -273,11 +269,11 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                   ...List.generate(otherHelpNameControllers.length, (i) {
                     return Column(
                       children: [
-                        buildTextField('Other Help Name #${i + 1}',
+                        buildTextField('અન્ય મદદનું નામ #${i + 1}',
                             otherHelpNameControllers[i]),
-                        buildNumberField('Other Help Quantity #${i + 1}',
+                        buildNumberField('અન્ય મદદ સંખ્યા #${i + 1}',
                             otherHelpQtyControllersList[i]),
-                        buildNumberField('Other Help Area (વિઘા) #${i + 1}',
+                        buildNumberField('અન્ય મદદ વિસ્તાર (વિઘા) #${i + 1}',
                             otherHelpAreaControllersList[i]),
                       ],
                     );
@@ -294,22 +290,19 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                     return Column(
                       children: [
                         buildNumberField(
-                            '$item quantity', otherHelpQtyControllers[item]!),
-                        buildNumberField('$item area (વિઘા)',
+                            '$item સંખ્યા', otherHelpQtyControllers[item]!),
+                        buildNumberField('$item વિસ્તાર (વિઘા)',
                             otherHelpAreaControllers[item]!),
                       ],
                     );
                   }).toList(),
                 ],
-                buildNumberField(
-                    'જો હા, કેટલુ વિઘા (કુલ)', otherHelpAreaController),
               ],
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   if (dropdownValues['બીજ આપ્યું (કિ.ગ્રા/સંખ્યા)'] == 'Yes' &&
-                      (multiselectValues['હસ્તક્ષેપ'] ?? [])
-                          .contains('Other')) {
+                      (multiselectValues['બીજ'] ?? []).contains('Other')) {
                     final n = int.tryParse(
                             otherInterventionCountController.text.trim()) ??
                         0;
@@ -397,7 +390,7 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                       }
                     }
                   }
-                  for (final item in (multiselectValues['હસ્તક્ષેપ'] ?? [])) {
+                  for (final item in (multiselectValues['બીજ'] ?? [])) {
                     if (item == 'Other') {
                       // Already validated above for dynamic others
                     } else if ((interventionQtyControllers[item]
@@ -446,7 +439,7 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                     }
                   }
                   Map<String, dynamic> data = {
-                    fieldKeyMap['મોસમ']!: selectedSeason,
+                    fieldKeyMap['ઋતુ']!: selectedSeason,
                     fieldKeyMap['બીજ આપ્યું']!:
                         dropdownValues['બીજ આપ્યું (કિ.ગ્રા/સંખ્યા)'],
                     fieldKeyMap['અન્ય સહાય મળી છે']!:
@@ -459,12 +452,12 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                     data[fieldKeyMap['બીજ માટે વિઘા']!] =
                         seedAreaController.text;
                     final List<String> selInterventions =
-                        List<String>.from(multiselectValues['હસ્તક્ષેપ'] ?? []);
+                        List<String>.from(multiselectValues['બીજ'] ?? []);
                     final List<String> normInterventions = selInterventions
                         .map((e) => e == 'Other' ? null : e)
                         .whereType<String>()
                         .toList();
-                    data[fieldKeyMap['હસ્તક્ષેપ']!] = [
+                    data[fieldKeyMap['બીજ']!] = [
                       ...normInterventions,
                       ...List.generate(
                           otherInterventionNameControllers.length,
@@ -515,8 +508,6 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                               (i) => otherHelpNameControllers[i].text.trim())
                           .where((e) => e.isNotEmpty),
                     ];
-                    data[fieldKeyMap['અન્ય સહાય માટે વિઘા']!] =
-                        otherHelpAreaController.text;
                     final Map<String, String> otherHelpQuantities = {};
                     final Map<String, String> otherHelpAreas = {};
                     for (final item in selHelps) {
@@ -554,7 +545,6 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                     dropdownValues.updateAll((key, value) => null);
                     multiselectValues.updateAll((key, value) => []);
                     seedAreaController.clear();
-                    otherHelpAreaController.clear();
                     otherInterventionNameController.clear();
                     otherHelpNameController.clear();
                     otherInterventionQtyController.clear();
@@ -699,7 +689,7 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                 if (selected != null) {
                   setState(() {
                     multiselectValues[label] = selected;
-                    if (label == 'હસ્તક્ષેપ') {
+                    if (label == 'બીજ') {
                       for (final item in selected.where((e) => e != 'Other')) {
                         interventionQtyControllers.putIfAbsent(
                             item, () => TextEditingController());
@@ -795,7 +785,7 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
                           onDeleted: () {
                             setState(() {
                               multiselectValues[label]?.remove(item);
-                              if (label == 'હસ્તક્ષેપ') {
+                              if (label == 'બીજ') {
                                 final c =
                                     interventionQtyControllers.remove(item);
                                 c?.dispose();
@@ -824,7 +814,6 @@ class _AddInterventionScreenState extends State<AddInterventionScreen> {
   @override
   void dispose() {
     seedAreaController.dispose();
-    otherHelpAreaController.dispose();
     otherInterventionNameController.dispose();
     otherHelpNameController.dispose();
     otherInterventionQtyController.dispose();

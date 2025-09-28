@@ -13,6 +13,7 @@ class _AddShopInfoScreenState extends State<AddShopInfoScreen> {
   final TextEditingController _farmerNameController = TextEditingController();
   final TextEditingController _fieldNameController = TextEditingController();
   final TextEditingController _landSizeController = TextEditingController();
+  final TextEditingController _rentedlandSizeController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _rationCardController = TextEditingController();
 
@@ -129,7 +130,15 @@ class _AddShopInfoScreenState extends State<AddShopInfoScreen> {
                 // Land Size
                 TextFormField(
                   controller: _landSizeController,
-                  decoration: _inputDecoration('કુટુંબની કુલ જમીન (વીઘા)'),
+                  decoration: _inputDecoration('કુલ જ્મીન પોતાની મલિકીની (વીઘા)'),
+                  keyboardType: TextInputType.number,
+                  validator: (value) => value == null || value.isEmpty ? 'Required' : null,
+                ),
+                const SizedBox(height: 16),
+
+                 TextFormField(
+                  controller: _rentedlandSizeController,
+                  decoration: _inputDecoration('ભાડાપેથે લીઘી લી જમીન (વીઘા)'),
                   keyboardType: TextInputType.number,
                   validator: (value) => value == null || value.isEmpty ? 'Required' : null,
                 ),
@@ -200,6 +209,7 @@ class _AddShopInfoScreenState extends State<AddShopInfoScreen> {
                           'fieldName': _fieldNameController.text.trim(),
                           'mobile': _mobileController.text.trim(),
                           'landSize': _landSizeController.text.trim(),
+                          'rentedLandSize': _rentedlandSizeController.text.trim(),
                           'rationCard': _rationCardController.text.trim(),
                           'district': selectedDistrict,
                           'block': selectedBlock,

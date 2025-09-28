@@ -71,57 +71,83 @@ class _MergedFarmerDataScreenState extends State<MergedFarmerDataScreen> {
     }
   }
 
-  void _initializeColumnDefs() {
+void _initializeColumnDefs() {
     _columnDefs.addAll([
       ColumnDef('Ration Card No', 'rationCardNo', TextAlign.center),
       ColumnDef('Farmer Name', 'farmerName', TextAlign.left),
       ColumnDef('Village', 'village', TextAlign.left),
       ColumnDef('Block', 'block', TextAlign.left),
       ColumnDef('Mobile', 'mobile', TextAlign.center),
-      ColumnDef('Land Size (Bigha)', 'landSize', TextAlign.center),
+      ColumnDef('Own Land Size (Bigha)', 'landSize', TextAlign.center),
+      ColumnDef('rentedLandSize (Bigha)', 'rentedLandSize', TextAlign.center),
       ColumnDef('Field Name', 'fieldName', TextAlign.left),
       ColumnDef('District', 'district', TextAlign.left),
       ColumnDef('Survey Numbers', 'surveyNumbers', TextAlign.left),
+      
+      // Crop details
       ColumnDef('Crop', 'crop', TextAlign.left),
       ColumnDef('Crop Type', 'cropType', TextAlign.left),
       ColumnDef('Season', 'season', TextAlign.left),
-      ColumnDef('Cultivation Area', 'cultivationArea', TextAlign.center),
+      ColumnDef('Crop Cultivation Area', 'Crop cultivation area', TextAlign.left),
+      
+      // Land preparation
+      ColumnDef('Land Preparation Before Planting', 'landPrepBefore', TextAlign.center),
+      ColumnDef('Land Preparation Cost', 'landPreparationCost', TextAlign.center),
+      
+      // Seeds and planting
+      ColumnDef('Seed Cost', 'seedCost', TextAlign.center),
+      ColumnDef('Transplant Cost', 'transplantCost', TextAlign.center),
+      
+      // Fertilizers
+      ColumnDef('DAP Quantity', 'dapQuantity', TextAlign.center),
+      ColumnDef('DAP Cost', 'dapCost', TextAlign.center),
+      ColumnDef('Urea Quantity', 'ureaQuantity', TextAlign.center),
+      ColumnDef('Urea Cost', 'ureaCost', TextAlign.center),
+      ColumnDef('SSP Quantity', 'sspQuantity', TextAlign.center),
+      ColumnDef('SSP Cost', 'sspCost', TextAlign.center),
+      ColumnDef('NPK Quantity', 'npkQuantity', TextAlign.center),
+      ColumnDef('NPK Cost', 'npkCost', TextAlign.center),
+      ColumnDef('Bio Fertilizer Quantity', 'bioFertilizerQuantity', TextAlign.center),
+      ColumnDef('Bio Fertilizer Cost', 'bioFertilizerCost', TextAlign.center),
+      
+      // Weed and pest control
+      ColumnDef('Weedicides Cost', 'weedicidesCost', TextAlign.center),
+      ColumnDef('Diseases', 'diseases', TextAlign.left),
+      ColumnDef('Pests', 'pests', TextAlign.left),
+      ColumnDef('Disease Control Cost', 'diseaseControlCost', TextAlign.center),
+      ColumnDef('Pesticides Cost', 'pesticidesCost', TextAlign.center),
+      
+      // Irrigation
+      ColumnDef('Irrigation Count', 'irrigationCount', TextAlign.center),
+      ColumnDef('Irrigation Cost', 'irrigationCost', TextAlign.center),
+      
+      // Harvest and labor
+      ColumnDef('Harvest Cost', 'harvestCost', TextAlign.center),
+      ColumnDef('Labor Cost', 'laborCost', TextAlign.center),
+      ColumnDef('Other Cost', 'otherCost', TextAlign.center),
+      
+      // Production and income
       ColumnDef('Total Production', 'totalProduction', TextAlign.center),
       ColumnDef('Selling Price', 'sellingPrice', TextAlign.center),
       ColumnDef('Total Income', 'totalIncome', TextAlign.center),
       ColumnDef('Total Expense', 'totalExpense', TextAlign.center),
       ColumnDef('Net Income', 'netIncome', TextAlign.center),
-      ColumnDef('Seed Cost', 'seedCost', TextAlign.center),
-      ColumnDef('Compost Cost', 'compostCost', TextAlign.center),
-      ColumnDef('Compost Quantity', 'compostQuantity', TextAlign.center),
-      ColumnDef('DAP Cost', 'dapCost', TextAlign.center),
-      ColumnDef('DAP Quantity', 'dapQuantity', TextAlign.center),
-      ColumnDef('Urea Cost', 'ureaCost', TextAlign.center),
-      ColumnDef('Urea Quantity', 'ureaQuantity', TextAlign.center),
-      ColumnDef('SSP Cost', 'sspCost', TextAlign.center),
-      ColumnDef('SSP Quantity', 'sspQuantity', TextAlign.center),
-      ColumnDef('NPK Cost', 'npkCost', TextAlign.center),
-      ColumnDef('NPK Quantity', 'npkQuantity', TextAlign.center),
-      ColumnDef('Bio Fertilizer Cost', 'bioFertilizerCost', TextAlign.center),
-      ColumnDef('Bio Fertilizer Quantity', 'bioFertilizerQuantity', TextAlign.center),
-      ColumnDef('Pesticides Cost', 'pesticidesCost', TextAlign.center),
-      ColumnDef('Labor Cost', 'laborCost', TextAlign.center),
-      ColumnDef('Land Preparation Cost', 'landPreparationCost', TextAlign.center),
-      ColumnDef('Irrigation Cost', 'irrigationCost', TextAlign.center),
-      ColumnDef('Irrigation Count', 'irrigationCount', TextAlign.center),
-      ColumnDef('Harvest Cost', 'harvestCost', TextAlign.center),
-      ColumnDef('Transplant Cost', 'transplantCost', TextAlign.center),
-      ColumnDef('Disease Control Cost', 'diseaseControlCost', TextAlign.center),
-      ColumnDef('Weedicides Cost', 'weedicidesCost', TextAlign.center),
-      ColumnDef('Other Cost', 'otherCost', TextAlign.center),
-      ColumnDef('Vegetable Count', 'vegetableCount', TextAlign.center),
+      
+      // Other products
       ColumnDef('Other Products', 'otherProducts', TextAlign.center),
       ColumnDef('Other Products Value', 'otherProductsValue', TextAlign.center),
-      ColumnDef('Land Prep Before Planting', 'landPrepBefore', TextAlign.center),
-      ColumnDef('Used Compost', 'usedCompost', TextAlign.center),
-      ColumnDef('Diseases', 'diseases', TextAlign.left),
-      ColumnDef('Pests', 'pests', TextAlign.left),
-      ColumnDef('Fertilizers Used', 'fertilizersUsed', TextAlign.left),
+      
+      // Additional fields from fieldKeys
+      // ColumnDef('Monsoon Other', 'monsoonOther', TextAlign.left),
+      // ColumnDef('Winter Other', 'winterOther', TextAlign.left),
+      // ColumnDef('Summer Other', 'summerOther', TextAlign.left),
+      ColumnDef('Diseases Other', 'diseasesOther', TextAlign.left),
+      ColumnDef('Pests Other', 'pestsOther', TextAlign.left),
+      ColumnDef('Edible Other', 'edibleOther', TextAlign.left),
+      ColumnDef('Vegetable Other', 'vegetableOther', TextAlign.left),
+      ColumnDef('Horticulture Other', 'horticultureOther', TextAlign.left),
+      
+      // Timestamps
       ColumnDef('Farmer Timestamp', 'farmerTimestamp', TextAlign.center),
       ColumnDef('Expense Timestamp', 'expenseTimestamp', TextAlign.center),
     ]);
@@ -162,215 +188,384 @@ class _MergedFarmerDataScreenState extends State<MergedFarmerDataScreen> {
     }
     return value.toString();
   }
-Future<void> _fetchMergedData() async {
-  try {
-    // Fetch paginated farmer details
-    Query farmerQuery = FirebaseFirestore.instance
-        .collection('farmer_details')
-        .orderBy('timestamp', descending: true)
-        .limit(_pageSize);
 
-    if (_lastDocument != null) {
-      farmerQuery = farmerQuery.startAfterDocument(_lastDocument!);
-    }
-
-    final farmerSnapshot = await farmerQuery.get();
-    if (farmerSnapshot.docs.isEmpty) {
-      setState(() => _hasMore = false);
-      return;
-    }
-
-    _lastDocument = farmerSnapshot.docs.last;
-
-    // Extract ration card numbers and farmer names
-    List<String> rationCardNos = [];
-    Map<String, String> farmerNameMap = {}; // Map ration card to farmer name
-    
-    for (var doc in farmerSnapshot.docs) {
-      final farmerData = doc.data() as Map<String, dynamic>;
-      final rationCard = farmerData['rationCard']?.toString() ?? '';
-      final farmerName = farmerData['farmerName']?.toString() ?? '';
-      
-      if (rationCard.isNotEmpty) {
-        rationCardNos.add(rationCard);
-        farmerNameMap[rationCard] = farmerName;
-      }
-    }
-
-    // Fetch corresponding crop details
-    final cropSnapshot = await FirebaseFirestore.instance
-        .collection('farm_expenses')
-        .where('ration_card_no', whereIn: rationCardNos)
-        .get();
-
-    print("Found ${cropSnapshot.docs.length} expense records for ${rationCardNos.length} ration cards");
-
-    // Create mapping for quick lookup with ration card matching only
-    // We'll handle name matching separately with more flexibility
-    Map<String, List<Map<String, dynamic>>> cropMap = {};
-    for (var doc in cropSnapshot.docs) {
-      final cropData = doc.data() as Map<String, dynamic>;
-      final rationCard = cropData['ration_card_no']?.toString() ?? '';
-      
-      if (rationCard.isNotEmpty) {
-        if (!cropMap.containsKey(rationCard)) {
-          cropMap[rationCard] = [];
-        }
-        cropMap[rationCard]!.add(cropData);
-      }
-    }
-
-    // Merge data
-    List<Map<String, dynamic>> pageData = [];
-    for (var farmerDoc in farmerSnapshot.docs) {
-      final farmerData = farmerDoc.data() as Map<String, dynamic>;
-      final rationCard = farmerData['rationCard']?.toString() ?? '';
-      final farmerName = farmerData['farmerName']?.toString() ?? '';
-      
-      // Skip if no matching expense document with same ration card
-      if (!cropMap.containsKey(rationCard)) {
-        print("No expense records for farmer: $farmerName with ration card: $rationCard");
-        continue;
-      }
-      
-      // Find the best matching expense record
-      Map<String, dynamic>? bestMatch;
-      for (var cropData in cropMap[rationCard]!) {
-        final expenseFarmerName = cropData['farmer_name']?.toString() ?? '';
-        
-        // Prioritize exact matches
-        if (expenseFarmerName == farmerName) {
-          bestMatch = cropData;
-          break;
-        }
-        // If no exact match, use the first one (even if name is empty)
-        else if (bestMatch == null) {
-          bestMatch = cropData;
-        }
-      }
-      
-      if (bestMatch == null) continue;
-      final cropData = bestMatch;
-
-      // Validate mandatory fields in farmer details
-      bool hasAllFarmerFields = _mandatoryFarmerFields.every(
-        (field) => farmerData.containsKey(field) && farmerData[field] != null
-      );
-      
-      // Validate mandatory fields in expense details
-      bool hasAllExpenseFields = _mandatoryExpenseFields.every(
-        (field) => cropData.containsKey(field) && cropData[field] != null
-      );
-      
-      // Skip if any mandatory fields are missing
-      if (!hasAllFarmerFields || !hasAllExpenseFields) {
-        print("Missing mandatory fields for farmer: $farmerName");
-        if (!hasAllFarmerFields) {
-          print("Missing farmer fields: ${_mandatoryFarmerFields.where((field) => !farmerData.containsKey(field) || farmerData[field] == null).toList()}");
-        }
-        if (!hasAllExpenseFields) {
-          print("Missing expense fields: ${_mandatoryExpenseFields.where((field) => !cropData.containsKey(field) || cropData[field] == null).toList()}");
-        }
-        continue;
-      }
-
-      // Calculate net income
-      final totalIncome = (cropData['total_income'] as num?)?.toDouble() ?? 0;
-      final totalExpense =
-          (cropData['total_expense'] as num?)?.toDouble() ?? 0;
-      final netIncome = totalIncome - totalExpense;
-
-      // Format survey numbers
-      final surveyNumbers = farmerData['surveyNumbers'] is List
-          ? (farmerData['surveyNumbers'] as List).join(', ')
-          : farmerData['surveyNumbers']?.toString() ?? '';
-
-      // Format diseases and pests
-      final diseases = _formatArray(cropData['diseases']);
-      final pests = _formatArray(cropData['pests']);
-      
-      // Format fertilizers used
-      final fertilizersUsed = _formatArray(cropData['fertilizers_used']);
-
-      pageData.add({
-        'rationCardNo': rationCard,
-        'farmerName': farmerName,
-        'village': farmerData['village'] ?? '',
-        'block': farmerData['block'] ?? '',
-        'mobile': farmerData['mobile'] ?? '',
-        'landSize': farmerData['landSize']?.toString() ?? '',
-        'fieldName': farmerData['fieldName'] ?? '',
-        'district': farmerData['district'] ?? '',
-        'surveyNumbers': surveyNumbers,
-        'farmerTimestamp': _formatTimestamp(farmerData['timestamp']),
-
-        // Crop details
-        'crop': cropData['crop'] ?? '',
-        'cropType': cropData['crop_type'] ?? '',
-        'season': cropData['season'] ?? '',
-        'cultivationArea': cropData['cultivation_area']?.toString() ?? '',
-        'totalProduction': cropData['total_production']?.toString() ?? '',
-        'sellingPrice': cropData['selling_price']?.toString() ?? '',
-        'totalIncome': totalIncome.toStringAsFixed(2),
-        'totalExpense': totalExpense.toStringAsFixed(2),
-        'netIncome': netIncome.toStringAsFixed(2),
-        'seedCost': cropData['seed_cost']?.toString() ?? '',
-        'compostCost': cropData['compost_cost']?.toString() ?? '',
-        'compostQuantity': cropData['compost_quantity']?.toString() ?? '',
-        'dapCost': cropData['dap_cost']?.toString() ?? '',
-        'dapQuantity': cropData['dap_quantity']?.toString() ?? '',
-        'ureaCost': cropData['urea_cost']?.toString() ?? '',
-        'ureaQuantity': cropData['urea_quantity']?.toString() ?? '',
-        'sspCost': cropData['ssp_cost']?.toString() ?? '',
-        'sspQuantity': cropData['ssp_quantity']?.toString() ?? '',
-        'npkCost': cropData['npk_cost']?.toString() ?? '',
-        'npkQuantity': cropData['npk_quantity']?.toString() ?? '',
-        'bioFertilizerCost': cropData['bio_fertilizer_cost']?.toString() ?? '',
-        'bioFertilizerQuantity': cropData['bio_fertilizer_quantity']?.toString() ?? '',
-        'pesticidesCost': cropData['pesticides_cost']?.toString() ?? '',
-        'laborCost': cropData['labor_cost']?.toString() ?? '',
-        'landPreparationCost':
-            cropData['land_preparation_cost']?.toString() ?? '',
-        'irrigationCost': cropData['irrigation_cost']?.toString() ?? '',
-        'irrigationCount': cropData['irrigation_count']?.toString() ?? '',
-        'harvestCost': cropData['harvest_cost']?.toString() ?? '',
-        'transplantCost': cropData['transplant_cost']?.toString() ?? '',
-        'diseaseControlCost':
-            cropData['disease_control_cost']?.toString() ?? '',
-        'weedicidesCost': cropData['weedicides_cost']?.toString() ?? '',
-        'otherCost': cropData['other_cost']?.toString() ?? '',
-        'vegetableCount': cropData['vegetable_count']?.toString() ?? '',
-        'otherProducts': cropData['other_products']?.toString() ?? '',
-        'otherProductsValue':
-            cropData['other_products_value']?.toString() ?? '',
-        'landPrepBefore': cropData['land_preparation_before_planting'] ?? '',
-        'usedCompost': cropData['used_compost'] ?? '',
-        'diseases': diseases,
-        'pests': pests,
-        'fertilizersUsed': fertilizersUsed,
-        'expenseTimestamp': _formatTimestamp(cropData['timestamp']),
-      });
-    }
-
-    print("Successfully merged ${pageData.length} records");
-
-    setState(() {
-      _mergedData.addAll(pageData);
-      _filterData();
-    });
-  } catch (e) {
-    print("Error fetching data: $e");
-  }
-}
-
-  Future<void> _exportToExcel(BuildContext context) async {
+  Future<void> _fetchMergedData() async {
     try {
+      // Fetch paginated farmer details
+      Query farmerQuery = FirebaseFirestore.instance
+          .collection('farmer_details')
+          .orderBy('timestamp', descending: true)
+          .limit(_pageSize);
+
+      if (_lastDocument != null) {
+        farmerQuery = farmerQuery.startAfterDocument(_lastDocument!);
+      }
+
+      final farmerSnapshot = await farmerQuery.get();
+      if (farmerSnapshot.docs.isEmpty) {
+        setState(() => _hasMore = false);
+        return;
+      }
+
+      _lastDocument = farmerSnapshot.docs.last;
+
+      // Extract ration card numbers and farmer names
+      List<String> rationCardNos = [];
+      Map<String, String> farmerNameMap = {}; // Map ration card to farmer name
+      
+      for (var doc in farmerSnapshot.docs) {
+        final farmerData = doc.data() as Map<String, dynamic>;
+        final rationCard = farmerData['rationCard']?.toString() ?? '';
+        final farmerName = farmerData['farmerName']?.toString() ?? '';
+        
+        if (rationCard.isNotEmpty) {
+          rationCardNos.add(rationCard);
+          farmerNameMap[rationCard] = farmerName;
+        }
+      }
+
+      // Fetch corresponding crop details
+      final cropSnapshot = await FirebaseFirestore.instance
+          .collection('farm_expenses')
+          .where('ration_card_no', whereIn: rationCardNos)
+          .get();
+
+      print("Found ${cropSnapshot.docs.length} expense records for ${rationCardNos.length} ration cards");
+
+      // Create mapping for quick lookup with ration card matching only
+      Map<String, List<Map<String, dynamic>>> cropMap = {};
+      for (var doc in cropSnapshot.docs) {
+        final cropData = doc.data() as Map<String, dynamic>;
+        final rationCard = cropData['ration_card_no']?.toString() ?? '';
+        
+        if (rationCard.isNotEmpty) {
+          if (!cropMap.containsKey(rationCard)) {
+            cropMap[rationCard] = [];
+          }
+          cropMap[rationCard]!.add(cropData);
+        }
+      }
+
+      // Merge data
+      List<Map<String, dynamic>> pageData = [];
+      for (var farmerDoc in farmerSnapshot.docs) {
+        final farmerData = farmerDoc.data() as Map<String, dynamic>;
+        final rationCard = farmerData['rationCard']?.toString() ?? '';
+        final farmerName = farmerData['farmerName']?.toString() ?? '';
+        
+        // Skip if no matching expense document with same ration card
+        if (!cropMap.containsKey(rationCard)) {
+          print("No expense records for farmer: $farmerName with ration card: $rationCard");
+          continue;
+        }
+        
+        // Create an entry for EACH expense record with this ration card
+        for (var cropData in cropMap[rationCard]!) {
+          // Validate mandatory fields in farmer details
+          bool hasAllFarmerFields = _mandatoryFarmerFields.every(
+            (field) => farmerData.containsKey(field) && farmerData[field] != null
+          );
+          
+          // Validate mandatory fields in expense details
+          bool hasAllExpenseFields = _mandatoryExpenseFields.every(
+            (field) => cropData.containsKey(field) && cropData[field] != null
+          );
+          
+          // Skip if any mandatory fields are missing
+          if (!hasAllFarmerFields || !hasAllExpenseFields) {
+            print("Missing mandatory fields for farmer: $farmerName");
+            if (!hasAllFarmerFields) {
+              print("Missing farmer fields: ${_mandatoryFarmerFields.where((field) => !farmerData.containsKey(field) || farmerData[field] == null).toList()}");
+            }
+            if (!hasAllExpenseFields) {
+              print("Missing expense fields: ${_mandatoryExpenseFields.where((field) => !cropData.containsKey(field) || cropData[field] == null).toList()}");
+            }
+            continue;
+          }
+
+          // Calculate net income
+          final totalIncome = (cropData['total_income'] as num?)?.toDouble() ?? 0;
+          final totalExpense =
+              (cropData['total_expense'] as num?)?.toDouble() ?? 0;
+          final netIncome = totalIncome - totalExpense;
+
+          // Format survey numbers
+          final surveyNumbers = farmerData['surveyNumbers'] is List
+              ? (farmerData['surveyNumbers'] as List).join(', ')
+              : farmerData['surveyNumbers']?.toString() ?? '';
+
+          // Format diseases and pests
+          final diseases = _formatArray(cropData['diseases']);
+          final pests = _formatArray(cropData['pests']);
+          
+          // Format fertilizers used
+          final fertilizersUsed = _formatArray(cropData['fertilizers_used']);
+
+          pageData.add({
+          'rationCardNo': rationCard,
+          'farmerName': farmerName,
+          'village': farmerData['village'] ?? '',
+          'block': farmerData['block'] ?? '',
+          'mobile': farmerData['mobile'] ?? '',
+          'landSize': farmerData['landSize']?.toString() ?? '',
+          'rentedLandSize': farmerData['rentedLandSize']?.toString() ?? '',
+          'fieldName': farmerData['fieldName'] ?? '',
+          'district': farmerData['district'] ?? '',
+          'surveyNumbers': surveyNumbers,
+          'farmerTimestamp': _formatTimestamp(farmerData['timestamp']),
+
+          // Crop details
+          'crop': cropData['crop'] ?? '',
+          'cropType': cropData['crop_type'] ?? '',
+          'season': cropData['season'] ?? '',
+          'Crop cultivation area': cropData['Crop cultivation area'] ?? '',
+          
+          // Land preparation
+          'landPrepBefore': cropData['land_preparation_before_planting'] ?? '',
+          'landPreparationCost': cropData['land_preparation_cost']?.toString() ?? '',
+          
+          // Seeds and planting
+          'seedCost': cropData['seed_cost']?.toString() ?? '',
+          'transplantCost': cropData['transplant_cost']?.toString() ?? '',
+          
+          // Fertilizers
+          'dapQuantity': cropData['dap_quantity']?.toString() ?? '',
+          'dapCost': cropData['dap_cost']?.toString() ?? '',
+          'ureaQuantity': cropData['urea_quantity']?.toString() ?? '',
+          'ureaCost': cropData['urea_cost']?.toString() ?? '',
+          'sspQuantity': cropData['ssp_quantity']?.toString() ?? '',
+          'sspCost': cropData['ssp_cost']?.toString() ?? '',
+          'npkQuantity': cropData['npk_quantity']?.toString() ?? '',
+          'npkCost': cropData['npk_cost']?.toString() ?? '',
+          'bioFertilizerQuantity': cropData['bio_fertilizer_quantity']?.toString() ?? '',
+          'bioFertilizerCost': cropData['bio_fertilizer_cost']?.toString() ?? '',
+          
+          // Weed and pest control
+          'weedicidesCost': cropData['weedicides_cost']?.toString() ?? '',
+          'diseases': diseases,
+          'pests': pests,
+          'diseaseControlCost': cropData['disease_control_cost']?.toString() ?? '',
+          'pesticidesCost': cropData['pesticides_cost']?.toString() ?? '',
+          
+          // Irrigation
+          'irrigationCount': cropData['irrigation_count']?.toString() ?? '',
+          'irrigationCost': cropData['irrigation_cost']?.toString() ?? '',
+          
+          // Harvest and labor
+          'harvestCost': cropData['harvest_cost']?.toString() ?? '',
+          'laborCost': cropData['labor_cost']?.toString() ?? '',
+          'otherCost': cropData['other_cost']?.toString() ?? '',
+          
+          // Production and income
+          'totalProduction': cropData['total_production']?.toString() ?? '',
+          'sellingPrice': cropData['selling_price']?.toString() ?? '',
+          'totalIncome': totalIncome.toStringAsFixed(2),
+          'totalExpense': totalExpense.toStringAsFixed(2),
+          'netIncome': netIncome.toStringAsFixed(2),
+          
+          // Other products
+          'otherProducts': cropData['other_products']?.toString() ?? '',
+          'otherProductsValue': cropData['other_products_value']?.toString() ?? '',
+          
+          // Additional fields from fieldKeys
+          // 'monsoonOther': cropData['monsoon_other'] ?? '',
+          // 'winterOther': cropData['winter_other'] ?? '',
+          // 'summerOther': cropData['summer_other'] ?? '',
+          'diseasesOther': cropData['diseases_other'] ?? '',
+          'pestsOther': cropData['pests_other'] ?? '',
+          'edibleOther': cropData['edible_other'] ?? '',
+          'vegetableOther': cropData['vegetable_other'] ?? '',
+          'horticultureOther': cropData['horticulture_other'] ?? '',
+          
+          'expenseTimestamp': _formatTimestamp(cropData['timestamp']),
+        });
+        }
+      }
+
+      print("Successfully merged ${pageData.length} records");
+
+      setState(() {
+        _mergedData.addAll(pageData);
+        _filterData();
+      });
+    } catch (e) {
+      print("Error fetching data: $e");
+    }
+  }
+
+  // New function to fetch ALL data for Excel export
+  Future<List<Map<String, dynamic>>> _fetchAllDataForExcel() async {
+    List<Map<String, dynamic>> allData = [];
+    
+    try {
+      // Show loading dialog
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 16),
+                Text('Preparing data for export...'),
+              ],
+            ),
+          );
+        },
+      );
+
+      // Fetch all farmer details
+      final farmerSnapshot = await FirebaseFirestore.instance
+          .collection('farmer_details')
+          .get();
+
+      // Create a map of ration card to farmer data
+      Map<String, Map<String, dynamic>> farmerMap = {};
+      for (var doc in farmerSnapshot.docs) {
+        final farmerData = doc.data() as Map<String, dynamic>;
+        final rationCard = farmerData['rationCard']?.toString() ?? '';
+        if (rationCard.isNotEmpty) {
+          farmerMap[rationCard] = farmerData;
+        }
+      }
+
+      // Fetch all expense records
+      final cropSnapshot = await FirebaseFirestore.instance
+          .collection('farm_expenses')
+          .get();
+
+      // Process each expense record
+      for (var cropDoc in cropSnapshot.docs) {
+        final cropData = cropDoc.data() as Map<String, dynamic>;
+        final rationCard = cropData['ration_card_no']?.toString() ?? '';
+        
+        if (rationCard.isNotEmpty && farmerMap.containsKey(rationCard)) {
+          final farmerData = farmerMap[rationCard]!;
+          
+          // Calculate net income
+          final totalIncome = (cropData['total_income'] as num?)?.toDouble() ?? 0;
+          final totalExpense = (cropData['total_expense'] as num?)?.toDouble() ?? 0;
+          final netIncome = totalIncome - totalExpense;
+
+          // Format survey numbers
+          final surveyNumbers = farmerData['surveyNumbers'] is List
+              ? (farmerData['surveyNumbers'] as List).join(', ')
+              : farmerData['surveyNumbers']?.toString() ?? '';
+
+          // Format diseases and pests
+          final diseases = _formatArray(cropData['diseases']);
+          final pests = _formatArray(cropData['pests']);
+          
+          // Format fertilizers used
+          final fertilizersUsed = _formatArray(cropData['fertilizers_used']);
+
+          allData.add({
+            'rationCardNo': rationCard,
+            'farmerName': farmerData['farmerName'] ?? '',
+            'village': farmerData['village'] ?? '',
+            'block': farmerData['block'] ?? '',
+            'mobile': farmerData['mobile'] ?? '',
+            'landSize': farmerData['landSize']?.toString() ?? '',
+            'rentedLandSize': farmerData['rentedLandSize']?.toString() ?? '',
+            'fieldName': farmerData['fieldName'] ?? '',
+            'district': farmerData['district'] ?? '',
+            'surveyNumbers': surveyNumbers,
+            'farmerTimestamp': _formatTimestamp(farmerData['timestamp']),
+
+            // Crop details
+            'crop': cropData['crop'] ?? '',
+            'cropType': cropData['crop_type'] ?? '',
+            'season': cropData['season'] ?? '',
+            'Crop cultivation area': cropData['Crop cultivation area'] ?? '',
+            
+            // Land preparation
+            'landPrepBefore': cropData['land_preparation_before_planting'] ?? '',
+            'landPreparationCost': cropData['land_preparation_cost']?.toString() ?? '',
+            
+            // Seeds and planting
+            'seedCost': cropData['seed_cost']?.toString() ?? '',
+            'transplantCost': cropData['transplant_cost']?.toString() ?? '',
+            
+            // Fertilizers
+            'dapQuantity': cropData['dap_quantity']?.toString() ?? '',
+            'dapCost': cropData['dap_cost']?.toString() ?? '',
+            'ureaQuantity': cropData['urea_quantity']?.toString() ?? '',
+            'ureaCost': cropData['urea_cost']?.toString() ?? '',
+            'sspQuantity': cropData['ssp_quantity']?.toString() ?? '',
+            'sspCost': cropData['ssp_cost']?.toString() ?? '',
+            'npkQuantity': cropData['npk_quantity']?.toString() ?? '',
+            'npkCost': cropData['npk_cost']?.toString() ?? '',
+            'bioFertilizerQuantity': cropData['bio_fertilizer_quantity']?.toString() ?? '',
+            'bioFertilizerCost': cropData['bio_fertilizer_cost']?.toString() ?? '',
+            
+            // Weed and pest control
+            'weedicidesCost': cropData['weedicides_cost']?.toString() ?? '',
+            'diseases': diseases,
+            'pests': pests,
+            'diseaseControlCost': cropData['disease_control_cost']?.toString() ?? '',
+            'pesticidesCost': cropData['pesticides_cost']?.toString() ?? '',
+            
+            // Irrigation
+            'irrigationCount': cropData['irrigation_count']?.toString() ?? '',
+            'irrigationCost': cropData['irrigation_cost']?.toString() ?? '',
+            
+            // Harvest and labor
+            'harvestCost': cropData['harvest_cost']?.toString() ?? '',
+            'laborCost': cropData['labor_cost']?.toString() ?? '',
+            'otherCost': cropData['other_cost']?.toString() ?? '',
+            
+            // Production and income
+            'totalProduction': cropData['total_production']?.toString() ?? '',
+            'sellingPrice': cropData['selling_price']?.toString() ?? '',
+            'totalIncome': totalIncome.toStringAsFixed(2),
+            'totalExpense': totalExpense.toStringAsFixed(2),
+            'netIncome': netIncome.toStringAsFixed(2),
+            
+            // Other products
+            'otherProducts': cropData['other_products']?.toString() ?? '',
+            'otherProductsValue': cropData['other_products_value']?.toString() ?? '',
+            
+            // Additional fields from fieldKeys
+            // 'monsoonOther': cropData['monsoon_other'] ?? '',
+            // 'winterOther': cropData['winter_other'] ?? '',
+            // 'summerOther': cropData['summer_other'] ?? '',
+            'diseasesOther': cropData['diseases_other'] ?? '',
+            'pestsOther': cropData['pests_other'] ?? '',
+            'edibleOther': cropData['edible_other'] ?? '',
+            'vegetableOther': cropData['vegetable_other'] ?? '',
+            'horticultureOther': cropData['horticulture_other'] ?? '',
+            
+            'expenseTimestamp': _formatTimestamp(cropData['timestamp']),
+          });
+        }
+      }
+
+      // Close the loading dialog
+      Navigator.of(context).pop();
+      return allData;
+    } catch (e) {
+      // Close the loading dialog on error
+      Navigator.of(context).pop();
+      print("Error fetching all data for Excel: $e");
+      throw e;
+    }
+  }
+
+Future<void> _exportToExcel(BuildContext context) async {
+    try {
+      // Fetch ALL data for Excel export
+      final allData = await _fetchAllDataForExcel();
+      
       final excel = Excel.createExcel();
       final sheet = excel['Farmer Data'];
 
+      // Add headers
       sheet.appendRow(_columnDefs.map((col) => col.header).toList());
 
-      for (var data in _mergedData) {
+      // Add data rows
+      for (var data in allData) {
         sheet.appendRow(_columnDefs.map((col) {
           final value = data[col.key] ?? '';
           if (col.key.endsWith('Cost') ||
@@ -500,8 +695,8 @@ Future<void> _fetchMergedData() async {
             );
           }).toList(),
         ),
-      ),
-    );
+      )
+      );
   }
 
   Widget _buildEmptyState() {

@@ -163,52 +163,29 @@ class _AnimalHusbandryDataScreenState extends State<AnimalHusbandryDataScreen> {
           .get();
 
       // Create mapping for quick lookup
-      Map<String, List<Map<String, dynamic>>> animalMap = {};
-      for (var doc in animalSnapshot.docs) {
-        final animalData = doc.data() as Map<String, dynamic>;
-        final rationCard = animalData['rationCardNo']?.toString() ?? '';
-        
+      Map<String, Map<String, dynamic>> farmerMap = {};
+      for (var doc in farmerSnapshot.docs) {
+        final farmerData = doc.data() as Map<String, dynamic>;
+        final rationCard = farmerData['rationCard']?.toString() ?? '';
         if (rationCard.isNotEmpty) {
-          if (!animalMap.containsKey(rationCard)) {
-            animalMap[rationCard] = [];
-          }
-          animalMap[rationCard]!.add(animalData);
+          farmerMap[rationCard] = farmerData;
         }
       }
 
-      // Merge data
+      // Merge data - create a row for each animal entry
       List<Map<String, dynamic>> pageData = [];
-      for (var farmerDoc in farmerSnapshot.docs) {
-        final farmerData = farmerDoc.data() as Map<String, dynamic>;
-        final rationCard = farmerData['rationCard']?.toString() ?? '';
+      for (var animalDoc in animalSnapshot.docs) {
+        final animalData = animalDoc.data() as Map<String, dynamic>;
+        final rationCard = animalData['rationCardNo']?.toString() ?? '';
         
-        // Skip if no matching animal document
-        if (!animalMap.containsKey(rationCard)) {
+        // Skip if no matching farmer document
+        if (!farmerMap.containsKey(rationCard)) {
           continue;
         }
         
-        // Find the best matching animal record
-        Map<String, dynamic>? bestMatch;
-        for (var animalData in animalMap[rationCard]!) {
-          // Get milk production values
-          final milkProductionAfterStr = animalData['પ્રોજેક્ટ પછી દૂધ ઉત્પાદન (દરરોજ)']?.toString() ?? '0';
-          final milkProductionBeforeStr = animalData['પહેલાં દૂધ ઉત્પાદન (દરરોજ)']?.toString() ?? '0';
-          
-          // Convert to numbers for comparison
-          final milkProductionAfter = double.tryParse(milkProductionAfterStr) ?? 0;
-          final milkProductionBefore = double.tryParse(milkProductionBeforeStr) ?? 0;
-          
-          // Only consider records where milk production after > milk production before
-          if (milkProductionAfter > milkProductionBefore) {
-            bestMatch = animalData;
-            break;
-          }
-        }
-        
-        if (bestMatch == null) continue;
-        final animalData = bestMatch;
+        final farmerData = farmerMap[rationCard]!;
 
-        // Get milk production values for display
+        // Get milk production values
         final milkProductionAfterStr = animalData['પ્રોજેક્ટ પછી દૂધ ઉત્પાદન (દરરોજ)']?.toString() ?? '0';
         final milkProductionBeforeStr = animalData['પહેલાં દૂધ ઉત્પાદન (દરરોજ)']?.toString() ?? '0';
         

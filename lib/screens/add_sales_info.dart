@@ -23,7 +23,6 @@ class _AddFarmExpenseScreenState extends State<AddFarmExpenseScreen> with Ticker
 
   // English field names mapping
   final Map<String, String> fieldKeys = {
-    'પાકનો વાવેતર વિસ્તાર (વીઘા)': 'cultivation_area',
     'શું વાવણી પહેલા જમીન તૈયાર કરી હતી?': 'land_preparation_before_planting',
     'જમીન તૈયારી ખર્ચ': 'land_preparation_cost',
     'બિયારણ/છોડનો ખર્ચ': 'seed_cost',
@@ -38,41 +37,40 @@ class _AddFarmExpenseScreenState extends State<AddFarmExpenseScreen> with Ticker
     'NPK ખર્ચ': 'npk_cost',
     'જૈવિક ખાતર (કિલોગ્રામમાં)': 'bio_fertilizer_quantity',
     'જૈવિક ખાતર ખર્ચ': 'bio_fertilizer_cost',
-    'નીંદણ દવા છાંટવા નો ખર્ચ': 'weedicides_cost',
+    'નીંદામણ દવા છાંટવા નો ખર્ચ': 'weedicides_cost',
     'રોગનું નામ': 'diseases',
-    'જीવાત/કીડાનું નામ': 'pests',
+    'જીવાત/કીડાનું નામ': 'pests',
     'રોગ નિયંત્રણ ખર્ચ': 'disease_control_cost',
+    'જંતુનાશક દવા ખર્ચ': 'pesticides_cost',
     'કુલ પિયત સંખ્યા': 'irrigation_count',
     'કુલ પિયત ખર્ચ': 'irrigation_cost',
-    'જંતુનાશક દવા ખર્ચ': 'pesticides_cost',
     'પાકની લણણી ખર્ચ': 'harvest_cost',
     'કુલ મજૂરી ખર્ચ': 'labor_cost',
     'અન્ય કોઈપણ ખર્ચ': 'other_cost',
-    'શાકભાજી ની સંખ્યા': 'vegetable_count',
-    'કુલ ઉત્પાદન (પ્રતિ મણ)': 'total_production',
+    //'શાકભાજી ની સંખ્યા': 'vegetable_count',
+    'season નું કુલ ઉત્પાદન (પ્રતિ મણ)': 'total_production',
     'વેચાણ ભાવ (પ્રતિ મણ)': 'selling_price',
-    'ચારો જેવા અન્ય ઉત્પાદન': 'other_products',
+    'ચારો જેવા અન્ય ઉત્પાદન (સંખ્યા)': 'other_products',
     'અન્ય ઉત્પાદનની કુલ કિંમત': 'other_products_value',
-    'Monsoon_other': 'monsoon_other',
-    'Winter_other': 'winter_other',
-    'Summer_other': 'summer_other',
     'રોગનું નામ_other': 'diseases_other',
     'જીવાત/કીડાનું નામ_other': 'pests_other',
     'Name of Edible/non edible crop_other': 'edible_other',
     'Name of Vegetable crop for all season_other': 'vegetable_other',
     'Name of Horticulture for all season_other': 'horticulture_other',
+    'પાકનો વાવેતર વિસ્તાર': 'selected_crop_details', // Added field
   };
 
   // Calculated fields mapping
   final Map<String, String> calculatedKeys = {
     'કુલ આવક': 'total_income',
     'કુલ ખર્ચ': 'total_expense',
-    'નિકાળ આવક': 'net_income',
+    'ચોખી આવક': 'net_income',
   };
 
   final Map<String, String> labelTypes = {
-    'કુલ જ્મીન પોતાની મલિકીની (વીઘા)': 'number',
-    'ભાડાપેદે  લીઘી લી  જમીન  (વીઘા)': 'number',
+    'Name of Edible/non edible crop_other': 'text',
+    'Name of Vegetable crop for all season_other': 'text',
+    'Name of Horticulture for all season_other': 'text',
     'શું વાવણી પહેલા જમીન તૈયાર કરી હતી?': 'dropdown_yesno',
     'જમીન તૈયારી ખર્ચ': 'number',
     // 'શું તમે ખાતર/છાણ/અન્ય બાયો ખાતર વાપર્યું?': 'dropdown_yesno',
@@ -80,49 +78,45 @@ class _AddFarmExpenseScreenState extends State<AddFarmExpenseScreen> with Ticker
     // 'કુલ છાણ/બાયો ખાતર ખર્ચ': 'number',
     'બિયારણ/છોડનો ખર્ચ': 'number',
     'વાવણી ખર્ચ': 'number',
-    'નીંદણ દવા છાંટવા નો ખર્ચ': 'number',
+    'નીંદામણ દવા છાંટવા નો ખર્ચ': 'number',
     'રોગનું નામ': 'multiselect',
     'જીવાત/કીડાનું નામ': 'multiselect',
+    'રોગનું નામ_other': 'text',
+    'જીવાત/કીડાનું નામ_other': 'text',
     'રોગ નિયંત્રણ  ખર્ચ': 'number',
+    'જંતુનાશક દવા ખર્ચ': 'number',
     'કુલ પિયત સંખ્યા': 'number',
     'કુલ પિયત ખર્ચ': 'number',
-    'જંતુનાશક દવા ખર્ચ': 'number',
     'પાકની લણણી ખર્ચ': 'number',
     'કુલ મજૂરી ખર્ચ': 'number',
     'અન્ય કોઈપણ ખર્ચ': 'number',
-    'શાકભાજી ની સંખ્યા': 'number',
-    'કુલ ઉત્પાદન (પ્રતિ મણ)': 'number',
+   // 'શાકભાજી ની સંખ્યા': 'number',
+    'ઋતુ નું કુલ ઉત્પાદન (પ્રતિ મણ)': 'number',
     'વેચાણ ભાવ (પ્રતિ મણ)': 'number',
-    'ચારો જેવા અન્ય ઉત્પાદન': 'text',
+    'ચારો જેવા અન્ય ઉત્પાદન (સંખ્યા)': 'text',
     'અન્ય ઉત્પાદનની કુલ કિંમત': 'number',
-    'Monsoon_other': 'text',
-    'Winter_other': 'text',
-    'Summer_other': 'text',
-    'રોગનું નામ_other': 'text',
-    'જીવાત/કીડાનું નામ_other': 'text',
-    'Name of Edible/non edible crop_other': 'text',
-    'Name of Vegetable crop for all season_other': 'text',
-    'Name of Horticulture for all season_other': 'text',
+    'પસંદ કરેલ પાકની વિગત': 'text', // Added field
   };
 
-  final List<String> expenseFields = [
-    'જમીન તૈયારી ખર્ચ',
-    'બિયારણ/છોડનો ખર્ચ',
-    'કુલ છાણ/બાયો ખાતર ખર્ચ',
-    'પ્રત્યારોપણ ખર્ચ',
-    'ડી.એ.પી. ખર્ચ',
-    'યૂરિયા ખર્ચ',
-    'SSP ખર્ચ',
-    'NPK ખર્ચ',
-    'જૈવિક ખાતર ખર્ચ',
-    'નીંદણ દવા છાંટવા નો ખર્ચ',
-    'રોગ नियंत्रण ખर्च',
-    'કુલ પિયત ખર્ચ',
-    'જંતુનાશક દવા ખર્ચ',
-    'પાકની લણણી ખર્ચ',
-    'કુલ મજૂરી ખર્ચ',
-    'અન્ય કોઈપણ ખર્ચ',
-  ];
+   final List<String> expenseFields = [
+  'જમીન તૈયારી ખર્ચ',
+  'વાવણી ખર્ચ',
+  'બિયારણ/છોડનો ખર્ચ',
+  'કુલ છાણ/બાયો ખાતર ખર્ચ',
+  'પ્રત્યારોપણ ખર્ચ',
+  'ડી.એ.પી. ખર્ચ',
+  'યૂરિયા ખર્ચ',
+  'SSP ખર્ચ',
+  'NPK ખર્ચ',
+  'જૈવિક ખાતર ખર્ચ',
+  'નીંદામણ દવા છાંટવા નો ખર્ચ',
+  'રોગ નિયંત્રણ  ખર્ચ',
+  'કુલ પિયત ખર્ચ',
+  'જંતુનાશક દવા ખર્ચ',
+  'પાકની લણણી ખર્ચ',
+  'કુલ મજૂરી ખર્ચ',
+  'અન્ય કોઈપણ ખર્ચ',
+];
 
   final List<String> diseases = [
     "Balya Tapka Rog",
@@ -134,7 +128,7 @@ class _AddFarmExpenseScreenState extends State<AddFarmExpenseScreen> with Ticker
     "Dhumra Rog",
     "Galatyo",
     "Jhal Rog",
-    "Kadjano Sado",
+    "Fruit no Sado",
     "Kala Dana",
     "Kalvan",
     "Kalo Sado",
@@ -154,6 +148,7 @@ class _AddFarmExpenseScreenState extends State<AddFarmExpenseScreen> with Ticker
     "Pilo Pachrangayo",
     "Pocho Sado",
     "Safed Geru",
+    "Sukaro"
     "Tapka Rog",
     "Tapka Tadtadiya",
     "Talchhalo",
@@ -174,12 +169,14 @@ class _AddFarmExpenseScreenState extends State<AddFarmExpenseScreen> with Ticker
     "Khor Ukhanar Iyal",
     "Lakad Iyal",
     "Mealy Bug",
+    "Pan Khanari Iyal"
     "Ruan Kasiya",
     "Santhani Makhi",
     "Safed Makhi",
     "Shing Makhi",
     "Shinglawali Iyal",
     "Suiya",
+    "Uday",
     "other"
   ];
 
@@ -408,7 +405,7 @@ Future<void> _fetchFarmerNames() async {
         controller: controllers[label],
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: const TextStyle(fontSize: 14),
+          labelStyle: const TextStyle(fontSize: 16),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),
         onChanged: (value) {
@@ -532,7 +529,7 @@ Future<void> _fetchFarmerNames() async {
 
   double calculateTotalIncome() {
     final production = double.tryParse(
-            controllers['કુલ ઉત્પાદન (પ્રતિ મણ)']?.text.trim() ?? '') ??
+            controllers['season નું કુલ ઉત્પાદન (પ્રતિ મણ)']?.text.trim() ?? '') ??
         0.0;
     final rate = double.tryParse(
             controllers['વેચાણ ભાવ (પ્રતિ મણ)']?.text.trim() ?? '') ??
@@ -594,7 +591,7 @@ Future<void> _fetchFarmerNames() async {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('નિકાળ આવક:',
+                const Text('ચોખી આવક:',
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 Text('₹${netIncome.toStringAsFixed(2)}',
@@ -723,7 +720,7 @@ Future<void> _fetchFarmerNames() async {
                     OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
               value: selectedSeason,
-              items: ['Monsoon', 'Winter', 'Summer', 'Other'].map((season) {
+              items: ['Monsoon', 'Winter', 'Summer'].map((season) {
                 return DropdownMenuItem(value: season, child: Text(season));
               }).toList(),
               onChanged: (value) {
@@ -781,6 +778,10 @@ Future<void> _fetchFarmerNames() async {
             if (selectedSeed == 'Other')
               buildTextField('${selectedSeedType}_other'),
 
+            // Show the selected crop details field after a crop is selected
+            if (selectedSeed != null && selectedSeed != 'Other')
+              buildTextField('પાકનો વાવેતર વિસ્તાર'),
+
             // Fertilizer multiselect
             buildMultiselectField('ખાતરનો પ્રકાર', fertilizers),
 
@@ -820,7 +821,8 @@ Future<void> _fetchFarmerNames() async {
                   label.startsWith('SSP') ||
                   label.startsWith('NPK') ||
                   label.startsWith('જૈવિક ખાતર') ||
-                  label.endsWith('_other')) {
+                  label.endsWith('_other') ||
+                  label == 'પસંદ કરેલ પાકની વિગત') {
                 return const SizedBox();
               }
 
@@ -840,10 +842,10 @@ Future<void> _fetchFarmerNames() async {
               }
 
               // Show vegetable_count only if vegetable crop is selected
-              if (label == 'શાકભાજી ની સંખ્યા' &&
-                  selectedSeedType != 'Name of Vegetable crop for all season') {
-                return const SizedBox();
-              }
+              // if (label == 'શાકભાજી ની સંખ્યા' &&
+              //     selectedSeedType != 'Name of Vegetable crop for all season') {
+              //   return const SizedBox();
+              // }
 
               if (type == 'number') return buildNumberField(label);
               if (type == 'text') return buildTextField(label);
@@ -892,14 +894,14 @@ Future<void> _fetchFarmerNames() async {
                   }
 
                   Map<String, dynamic> data = {
-                    'farmer_name': selectedFarmerName,
-                    'ration_card_no': widget.rationCardNo,
-                    'season': selectedSeason,
-                    'crop_type': selectedSeedType,
-                    'crop': selectedSeed,
-                    'timestamp': FieldValue.serverTimestamp(),
-                    'fertilizers_used': selectedFertilizers,
-                  };
+                  'farmer_name': selectedFarmerName,
+                  'ration_card_no': widget.rationCardNo,
+                  'season': selectedSeason,
+                  'crop_type': selectedSeedType,
+                  'crop': selectedSeed,
+                  'Crop cultivation area': controllers['પાકનો વાવેતર વિસ્તાર']?.text ?? '', // Add this line
+                  'timestamp': FieldValue.serverTimestamp(),
+                   };
 
                   bool isValid = true;
 
@@ -923,11 +925,11 @@ Future<void> _fetchFarmerNames() async {
                             'Yes') {
                       continue;
                     }
-                    if (label == 'શાકભાજી ની સંખ્યા' &&
-                        selectedSeedType !=
-                            'Name of Vegetable crop for all season') {
-                      continue;
-                    }
+                    // if (label == 'શાકભાજી ની સંખ્યા' &&
+                    //     selectedSeedType !=
+                    //         'Name of Vegetable crop for all season') {
+                    //   continue;
+                    // }
 
                     if (type == 'text' || type == 'number') {
                       String value = controllers[label]!.text.trim();
@@ -956,7 +958,7 @@ Future<void> _fetchFarmerNames() async {
 
                     data[calculatedKeys['કુલ આવક']!] = totalIncome;
                     data[calculatedKeys['કુલ ખર્ચ']!] = totalExpense;
-                    data[calculatedKeys['નિકાળ આવક']!] = netIncome;
+                    data[calculatedKeys['ચોખી આવક']!] = netIncome;
 
                     String id =
                         DateTime.now().millisecondsSinceEpoch.toString();
